@@ -1,9 +1,14 @@
+library("dplyr",include.only = ("%>%"))
+
 #' Align peaks across multiple samples
 #'
 #' This function aligns peaks across multiple samples based on m/z and retention time (rt) tolerances.
-#' It is an implementation of mzMine's Join Aligner algorithm.
+#' It is a simplified implementation of mzMine's Join Aligner algorithm.
 #' mzmine.github.io/mzmine_documentation/module_docs/align_join_aligner/join_aligner.html
-#' 
+#'
+#' @importFrom dplyr %>% select mutate bind_rows sym row_number if_else filter
+#'     ungroup group_by arrange mutate_if
+#' @importFrom rlang :=
 #' @param input A named list of data frames, each containing peak information with columns for id, rt, and mz.
 #' @param mz_tolerance Numeric,
 #' the tolerance for m/z alignment window.
@@ -22,11 +27,9 @@
 #' @return A data frame with aligned peaks across all samples.
 #' The data frame will have columns for id, rt, mz.
 #' The original id for each sample is stored in separate columns.
-#' @examples
-#' # Example usage:
-#' # aligned_peaks <- join_aligner(
-#'  input_list
-#' )
+#'
+#'
+
 join_aligner <- function(
   input,
   mz_tolerance = 0.05,
@@ -41,7 +44,7 @@ join_aligner <- function(
   if (!is.list(input)) {
     stop("Input must be a list")
   }
-  
+
   # Ensure input is a named list
   if (is.null(names(input))) {
     warning("Input must be a named list\n renaming...")
@@ -59,7 +62,7 @@ join_aligner <- function(
     # technically unncecessary
   new_order <- names(sort(unlist(lapply(input, nrow)), decreasing = TRUE))
   input <- input[new_order]
-  
+
   # Initialize master list with the first sample
   master_list <- input[[1]]
 
@@ -67,7 +70,7 @@ join_aligner <- function(
   for (sample_id in seq_along(input)) {
     sample <- input[[sample_id]]
     sample_name <- names(input)[sample_id]
-    
+
     # Iterate over each peak in the master list
     for (i in seq_len(nrow(master_list))) {
       # Define the alignment window (AW)
@@ -77,22 +80,22 @@ join_aligner <- function(
 
       mz_range <- c(master_mz - mz_tolerance, master_mz + mz_tolerance)
       rt_range <- c(master_rt - rt_tolerance, master_rt + rt_tolerance)
-      
+
       # Find peaks within the alignment window
       candidate_peaks <- sample %>%
         filter(mz >= mz_range[1] & mz <= mz_range[2] & rt >= rt_range[1] & rt <= rt_range[2])
-      
+
       if (nrow(candidate_peaks) > 0) {
         # Compute scores for each candidate peak
         scores <- rowSums(cbind(
           (1 - abs(candidate_peaks$mz - master_mz) / mz_tolerance) * mz_weight,
           (1 - abs(candidate_peaks$rt - master_rt) / rt_tolerance) * rt_weight
         ))
-        
+
         # Find the peak with the best score
         best_match <- candidate_peaks[which.max(scores), ]
         best_score <- max(scores)
-        
+
         # Align the best match peak
         master_list[i, "mz"] <- mean(c(master_mz, best_match$mz))
         master_list[i, "rt"] <- mean(c(master_rt, best_match$rt))
@@ -102,20 +105,20 @@ join_aligner <- function(
 
       }
     }
-    
+
     master_list <- master_list %>%
       group_by(!!sym(sample_name)) %>%
       mutate(
-        score = replace(score, is.na(score), 0),
-        !!sym(sample_name) := if_else(score == max(score, na.rm = TRUE), !!sym(sample_name), NA_real_)
+        score = replace(.data$score, is.na(.data$score), 0),
+        !!sym(sample_name) := if_else(.data$score == max(.data$score, na.rm = TRUE), !!sym(sample_name), NA_real_)
       ) %>%
       ungroup() %>%
-      select(-score)  # Remove the score column
-    
+      select(-.data$score)  # Remove the score column
+
     # Find missing features in the master list
     missing_features <- sample %>%
       filter(!id %in% master_list[[sample_name]])
-    
+
     # Add missing features to the master list
     if (nrow(missing_features) > 0) {
       missing_features[[sample_name]] <- missing_features[[id_col]]
@@ -126,6 +129,8 @@ join_aligner <- function(
 
 
   }
-  
+
   return(master_list)
 }
+
+utils::globalVariables(c(".data", "."))
