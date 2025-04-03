@@ -8,16 +8,13 @@ mzmine_to_se(
   path_to_file,
   sample_meta_data,
   intensity_type = c("area", "height"),
-  normalize = c(TRUE, FALSE),
-  transform = c(TRUE, FALSE),
-  vsn = c(TRUE, FALSE)
+  normalize = TRUE,
+  transform = TRUE,
+  vsn = TRUE
 )
 }
 \arguments{
 \item{path_to_file}{path to the mzmine feature table}
-
-\item{sample_meta_data}{data.frame containing sample metadata
-the first columnn has to be the sample names}
 
 \item{intensity_type}{either "area" or "height"}
 
@@ -26,6 +23,9 @@ the first columnn has to be the sample names}
 \item{transform}{logical. Whether to transform the normalized data}
 
 \item{vsn}{logical. Whether to perform variance stabilizing normalization}
+
+\item{path_to__meta_data}{data.frame with sample meta data
+the first columnn has to be the sample names}
 }
 \value{
 a summarizedExperiment Object
