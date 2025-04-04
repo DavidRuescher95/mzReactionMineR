@@ -1,5 +1,3 @@
-library("dplyr",include.only = ("%>%"))
-
 #' Title
 #' @importFrom utils read.csv
 #' @importFrom dplyr %>% mutate group_by
@@ -49,6 +47,8 @@ mzmine_to_se <- function(
   names(feature_area) <- gsub(paste0("[.]",intensity_type), "", names(feature_area))
   names(feature_area) <- gsub(paste0("datafile[.]"), "", names(feature_area))
 
+  sample_meta_data[,1] <- make.names(sample_meta_data[,1])
+
   # generate summarized experiment
 
   print("Creating SummarizedExperiment object")
@@ -59,7 +59,7 @@ mzmine_to_se <- function(
       raw = as.matrix(feature_area)
     ),
     colData = sample_meta_data[
-      match(names(feature_area),make.names(sample_meta_data[,1])),
+      match(names(feature_area),sample_meta_data[,1]),
     ]
   )
 
