@@ -2,34 +2,34 @@
 % Please edit documentation in R/mzmine_to_se.R
 \name{mzmine_to_se}
 \alias{mzmine_to_se}
-\title{Title}
+\title{mzmine_to_se}
 \usage{
 mzmine_to_se(
   path_to_file,
   sample_meta_data,
   intensity_type = c("area", "height"),
-  normalize = TRUE,
-  transform = TRUE,
-  vsn = TRUE
+  rowData_cols = c("id", "rt", "mz", "ion_mobility"),
+  remove_adducts = FALSE
 )
 }
 \arguments{
 \item{path_to_file}{path to the mzmine feature table}
 
-\item{intensity_type}{either "area" or "height"}
-
-\item{normalize}{logical. Whether to normalize the data}
-
-\item{transform}{logical. Whether to transform the normalized data}
-
-\item{vsn}{logical. Whether to perform variance stabilizing normalization}
-
-\item{path_to__meta_data}{data.frame with sample meta data
+\item{sample_meta_data}{data.frame. sample meta data to become colData
 the first columnn has to be the sample names}
+
+\item{intensity_type}{character. either "area" or "height"}
+
+\item{rowData_cols}{character vector. column names to be used as rowData}
+
+\item{remove_adducts}{logical. if TRUE, remove adducts from the feature
+table. Requires that the ion_identities.iin_id column is present in the
+data.}
 }
 \value{
 a summarizedExperiment Object
 }
 \description{
-Title
+Convert mzMine feature table to a SummarizedExperiment object. Assumes the
+"Export to CSV (modular)" was used
 }
