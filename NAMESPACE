@@ -3,6 +3,7 @@
 export(anovaLimma)
 export(contrastLimma)
 export(filterSe)
+export(mzmine_alignment_QC)
 export(mzmine_to_se)
 export(normalizePQN)
 importFrom(MatrixGenerics,rowMedians)
