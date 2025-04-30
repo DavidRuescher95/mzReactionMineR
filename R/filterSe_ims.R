@@ -23,25 +23,30 @@
 #'     for each group.
 #' @param mz_range Numeric. A vector of length 2. The range of kept m/z values.
 #' @param rt_range Numeric. A vector of length 2. The range of kept rt values.
+#' @param mobility_range Numeric. A vector of length 2.
+#'     The range of kept ion mobility values.
 #' @param id_col Character. The respective column name in the rowData.
 #' @param rt_col Character. The respective column name in the rowData.
 #' @param mz_col Character. The respective column name in the rowData.
+#' @param ion_mobility_col Character. The respective column name in the rowData.
 #'
 #' @returns A filtered summarizeExperiment object
 #' @export
-filterSe <- function(
-  object = NULL,
-  assay = NULL,
-  sample_col = "filename",
-  group_col = "none",
-  not_in = "none",
-  min_abundance = 0,
-  min_pct = 0.8,
-  mz_range = c(0,Inf),
-  rt_range = c(0,Inf),
-  id_col = "id",
-  rt_col = "rt",
-  mz_col = "mz"
+filterSe_ims <- function(
+    object = NULL,
+    assay = NULL,
+    sample_col = "filename",
+    group_col = "none",
+    not_in = "none",
+    min_abundance = 0,
+    min_pct = 0.8,
+    mz_range = c(0,Inf),
+    rt_range = c(0,Inf),
+    mobility_range = c(0,Inf),
+    id_col = "id",
+    rt_col = "rt",
+    mz_col = "mz",
+    ion_mobility_col = "ion_mobility"
 ) {
 
   # get column names of rowData
@@ -66,7 +71,9 @@ filterSe <- function(
     ) %>%
     filter(
       !!sym(mz_col) > mz_range[1] & !!sym(mz_col) < mz_range[2],
-      !!sym(rt_col) > rt_range[1] & !!sym(rt_col) < rt_range[2]
+      !!sym(rt_col) > rt_range[1] & !!sym(rt_col) < rt_range[2],
+      !!sym(ion_mobility_col) > mobility_range[1] &
+        !!sym(ion_mobility_col) < mobility_range[2]
     )
 
   # remove features with values < min_pct

@@ -15,9 +15,11 @@ Imports:
     tidyr,
     tidyselect,
     limma,
+    ggplot2,
     SummarizedExperiment,
     MatrixGenerics,
     rlang,
+    methods,
     stats
 Additional_repositories: 
     https://bioconductor.org/packages/3.20/bioc

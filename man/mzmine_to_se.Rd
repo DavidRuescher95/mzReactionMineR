@@ -8,7 +8,6 @@ mzmine_to_se(
   path_to_file,
   sample_meta_data,
   intensity_type = c("area", "height"),
-  rowData_cols = c("id", "rt", "mz", "ion_mobility"),
   remove_adducts = FALSE
 )
 }
@@ -19,8 +18,6 @@ mzmine_to_se(
 the first columnn has to be the sample names}
 
 \item{intensity_type}{character. either "area" or "height"}
-
-\item{rowData_cols}{character vector. column names to be used as rowData}
 
 \item{remove_adducts}{logical. if TRUE, remove adducts from the feature
 table. Requires that the ion_identities.iin_id column is present in the

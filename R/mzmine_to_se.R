@@ -10,7 +10,6 @@
 #' @param sample_meta_data data.frame. sample meta data to become colData
 #'     the first columnn has to be the sample names
 #' @param intensity_type character. either "area" or "height"
-#' @param rowData_cols character vector. column names to be used as rowData
 #' @param remove_adducts logical. if TRUE, remove adducts from the feature
 #'     table. Requires that the ion_identities.iin_id column is present in the
 #'     data.
@@ -23,7 +22,6 @@ mzmine_to_se <- function(
     path_to_file,
     sample_meta_data,
     intensity_type = c("area","height"),
-    rowData_cols = c("id","rt","mz","ion_mobility"),
     remove_adducts = FALSE
 ) {
 
@@ -43,7 +41,11 @@ mzmine_to_se <- function(
   print("Processing feature table")
 
   if(remove_adducts) {
-    features <- features[is.na(features$ion_identities.iin_id), ]
+    features <- features[
+      (is.na(features$ion_identities.iin_id)) |
+        (features$ion_identities.iin_id == "[M]-") |
+        (features$ion_identities.iin_id == "[M]+"),
+      ]
   }
 
   feature_area <- features[,names(features)[grepl(paste0("[.]",intensity_type),names(features))]]
@@ -64,6 +66,8 @@ mzmine_to_se <- function(
   # generate summarized experiment
 
   print("Creating SummarizedExperiment object")
+
+  rowData_cols <- names(features)[!grepl("datafile[.]",names(features))]
 
   se <- SummarizedExperiment(
     rowData = features[,rowData_cols],

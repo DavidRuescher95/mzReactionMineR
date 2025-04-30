@@ -41,6 +41,9 @@ mzmine_alignment_QC <- function(
   names(alignment_table) <- gsub(
     "alignment_scores[.]", "", names(alignment_table)
   )
+
+  return(alignment_table)
+
 }
 
 
