@@ -1,5 +1,6 @@
-Package: MSDataAnalysis
-Title: Functions for the statistical analysis of mass spectrometry data
+Package: mzReactionMineR
+Title: Functions for the statistical analysis of mass spectrometry data to
+    to detect new compounds in biotransformation experiments
 Version: 0.0.0.9000
 Authors@R: 
     person("David", "Rüscher", , "ruescher.david@gmail.com", role = c("aut", "cre"))

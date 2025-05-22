@@ -12,6 +12,7 @@ filterSe(
   not_in = "none",
   min_abundance = 0,
   min_pct = 0.8,
+  min_n = 1L,
   mz_range = c(0, Inf),
   rt_range = c(0, Inf),
   id_col = "id",
@@ -37,7 +38,13 @@ in a sample}
 
 \item{min_pct}{Numeric. Minimum percentage of samples a feature must be
 present in. If group_col is specified, the percentage is calculated for
-for each group.}
+for each group. If min_n is specified, this is ignored, the larger value
+will be used.}
+
+\item{min_n}{Integer. Minimum number of samples a feature must be
+present in. If group_col is specified, the percentage is calculated for
+for each group. If min_pct is specified, this is ignored, the larger value
+will be used.}
 
 \item{mz_range}{Numeric. A vector of length 2. The range of kept m/z values.}
 

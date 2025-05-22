@@ -14,7 +14,7 @@
 
 mzmine_alignment_QC <- function(
     path_to_file,
-    rowData_cols = c("id","rt","mz","ion_mobility")
+    rowData_cols = c("id","rt","mz")
 ) {
 
   # load feature data

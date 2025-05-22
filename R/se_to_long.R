@@ -5,7 +5,7 @@
 #'
 #' @importFrom dplyr %>% inner_join
 #' @importFrom tidyr pivot_longer
-#' @importFrom MSDataAnalysis get_colData get_rowData
+#' @importFrom mzReactionMineR get_colData get_rowData
 #' @importFrom tidyselect all_of
 #' @importFrom SummarizedExperiment rowData SummarizedExperiment
 #' @param object a SummarizedExperiment object
@@ -19,7 +19,7 @@ se_to_long <- function(
   assay
 ) {
   df <- cbind(
-    MSDataAnalysis::get_rowData(object), assays(object)[[assay]]
+    mzReactionMineR::get_rowData(object), assays(object)[[assay]]
   ) %>%
     tidyr::pivot_longer(
       cols = -tidyselect::all_of(colnames(rowData(object))),
@@ -27,7 +27,7 @@ se_to_long <- function(
       values_to = "value"
     ) %>%
     dplyr::inner_join(
-      MSDataAnalysis::get_colData(object)
+      mzReactionMineR::get_colData(object)
     )
   return(df)
 }

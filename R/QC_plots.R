@@ -6,7 +6,7 @@
 #' @importFrom dplyr %>% mutate select filter group_by summarize_at
 #' @importFrom utils read.csv
 #' @importFrom SummarizedExperiment SummarizedExperiment assays rowData colData
-#' @importFrom MSDataAnalysis se_to_long
+#' @importFrom mzReactionMineR se_to_long
 #' @importFrom methods setClass new
 #' @importFrom grDevices nclass.Sturges
 #' @import ggplot2
@@ -119,7 +119,7 @@ QC_plots <- function(
 
   if("mz_dev" %in% what){
 
-    tmp <- MSDataAnalysis::se_to_long(se, "mz_dev") %>%
+    tmp <- mzReactionMineR::se_to_long(se, "mz_dev") %>%
       dplyr::filter(
         !is.na(.data$value)
       )
@@ -153,7 +153,7 @@ QC_plots <- function(
   }
 
   if("rt_dev" %in% what){
-    tmp <- MSDataAnalysis::se_to_long(se, "rt_dev") %>%
+    tmp <- mzReactionMineR::se_to_long(se, "rt_dev") %>%
       dplyr::filter(
         !is.na(.data$value)
       )
@@ -270,4 +270,5 @@ QC_plots <- function(
 
 }
 
-utils::globalVariables(c(".data", ".", "..density..", "filename", "value"))
+utils::globalVariables(c(".data", ".", "..density..", "density", "filename",
+                         "value"))

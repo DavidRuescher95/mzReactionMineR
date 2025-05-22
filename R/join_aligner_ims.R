@@ -168,4 +168,4 @@ join_aligner_ims <- function(
   return(master_list)
 }
 
-utils::globalVariables(c(".data", "."))
+utils::globalVariables(c(".data", ".", "ion_mobility"))

@@ -4,10 +4,7 @@
 \alias{mzmine_alignment_QC}
 \title{mzmine_to_se}
 \usage{
-mzmine_alignment_QC(
-  path_to_file,
-  rowData_cols = c("id", "rt", "mz", "ion_mobility")
-)
+mzmine_alignment_QC(path_to_file, rowData_cols = c("id", "rt", "mz"))
 }
 \arguments{
 \item{path_to_file}{path to the mzmine feature table}

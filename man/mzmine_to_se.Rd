@@ -4,12 +4,7 @@
 \alias{mzmine_to_se}
 \title{mzmine_to_se}
 \usage{
-mzmine_to_se(
-  path_to_file,
-  sample_meta_data,
-  intensity_type = c("area", "height"),
-  remove_adducts = FALSE
-)
+mzmine_to_se(path_to_file, sample_meta_data = NULL, assays = NULL)
 }
 \arguments{
 \item{path_to_file}{path to the mzmine feature table}
@@ -17,11 +12,7 @@ mzmine_to_se(
 \item{sample_meta_data}{data.frame. sample meta data to become colData
 the first columnn has to be the sample names}
 
-\item{intensity_type}{character. either "area" or "height"}
-
-\item{remove_adducts}{logical. if TRUE, remove adducts from the feature
-table. Requires that the ion_identities.iin_id column is present in the
-data.}
+\item{assays}{character vector. what result type to use. (i.e. "height")}
 }
 \value{
 a summarizedExperiment Object
