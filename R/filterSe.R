@@ -59,13 +59,15 @@ filterSe <- function(
   data_long <- cbind(
     as.data.frame(rowData(object)),
     as.data.frame(assays(object)[[assay]]) %>%
-      replace(is.na(.data),0) %>%
-      replace(.data > min_abundance, 1)
+      replace(is.na(.data),0)
   ) %>%
     pivot_longer(
       cols = -all_of(id_cols),
       names_to = sample_col,
       values_to = "Value"
+    ) %>%
+    mutate(
+      Value = ifelse(Value > min_abundance, Value, 0)
     ) %>%
     inner_join(
       as.data.frame(colData(object))

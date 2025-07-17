@@ -32,8 +32,15 @@ join_se_sirius <- function(
       SummarizedExperiment::rowData(object)
     ),
     canopus_structure_summary
+  )
+  if(dim(SummarizedExperiment::rowData(object))[1] < dim(new_rowData)[1]){
+    print(
+      "Duplicate rows in the SIRIUS output file were found. Removing duplicates...",
     )
-  SummarizedExperiment::rowData(object) <- new_rowData
+    SummarizedExperiment::rowData(object) <- new_rowData[!duplicated(new_rowData$id),]
+  } else {
+    SummarizedExperiment::rowData(object) <- new_rowData
+  }
   return(object)
 }
 utils::globalVariables(c(".",".data"))
