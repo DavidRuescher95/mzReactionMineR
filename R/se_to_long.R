@@ -16,14 +16,15 @@
 #'
 se_to_long <- function(
   object,
-  assay
+  assay,
+  filename = "filename"
 ) {
   df <- cbind(
     mzReactionMineR::get_rowData(object), assays(object)[[assay]]
   ) %>%
     tidyr::pivot_longer(
       cols = -tidyselect::all_of(colnames(rowData(object))),
-      names_to = "filename",
+      names_to = filename,
       values_to = "value"
     ) %>%
     dplyr::inner_join(

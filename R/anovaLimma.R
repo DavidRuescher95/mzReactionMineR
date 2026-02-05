@@ -21,7 +21,8 @@ anovaLimma <- function(object = NULL,
                        assay = NULL,
                        blocking_variables = NULL,
                        test_variables = NULL,
-                       padj_method = "fdr") {
+                       padj_method = "fdr",
+                       return_colums = c("id", "rt", "mz")) {
 
   sample_data <- as.data.frame(SummarizedExperiment::colData(object))
 
@@ -79,7 +80,7 @@ anovaLimma <- function(object = NULL,
       coef = colnames(X)[length(unique(sample_data[,unlist(blocking_variables)])):(length(colnames(X)))]
     )
   ) %>%
-    select(id, rt, mz, 'F', P.Value, adj.P.Val)
+    select(return_colums, 'F', P.Value, adj.P.Val)
 
   return(anova_res)
 

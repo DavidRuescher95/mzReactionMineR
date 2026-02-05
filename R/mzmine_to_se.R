@@ -1,7 +1,7 @@
 #' mzmine_to_se
 #'
 #' Convert mzMine feature table to a SummarizedExperiment object. Assumes the
-#'     "Export to CSV (modular)" was used
+#'     "Export to CSV (modular)" was used.
 #'
 #' @importFrom utils read.csv
 #' @importFrom dplyr %>% mutate group_by
@@ -9,6 +9,8 @@
 #' @param path_to_file path to the mzmine feature table
 #' @param sample_meta_data data.frame. sample meta data to become colData
 #'     the first columnn has to be the sample names
+#' @param filenames character. name of the column in the meta data that
+#'     corresponds to the sample names in the feature table
 #' @param assays character vector. what result type to use. (i.e. "height")
 
 #'
@@ -19,7 +21,8 @@
 mzmine_to_se <- function(
     path_to_file,
     sample_meta_data = NULL,
-    assays = NULL
+    assays = NULL,
+    filenames = "filename"
 ) {
 
   # load feature data
@@ -69,6 +72,7 @@ mzmine_to_se <- function(
     tmp <- features[, grepl(paste0("[.]", x,"$"), names(features))]
     names(tmp) <- gsub(paste0("[.]",x), "", names(tmp))
     names(tmp) <- gsub(paste0("datafile[.]"), "", names(tmp))
+    names(tmp) <- make.names(names(tmp))
     return(as.matrix(tmp))
   })
   names(assays_list) <- assays
@@ -91,15 +95,35 @@ mzmine_to_se <- function(
 
   # rename to fit the file names in meta_data
 
-  sample_meta_data[,1] <- make.names(sample_meta_data[,1])
+  sample_meta_data[[filenames]] <- make.names(sample_meta_data[[filenames]])
 
-  if(any(!samples %in% sample_meta_data[,1])) {
-    stop("Sample names in the feature table are not equal to sample names in the meta data")
-  } else {
+  if(any(!samples %in% sample_meta_data[[filenames]])) {
+    warning("Sample names in the feature table are not equal to sample names in the meta data")
+
+    print(
+      paste0(
+        "Removing sample not present in meta data: ",
+        samples[!samples %in% sample_meta_data[[filenames]]]
+      )
+    )
+
     sample_meta_data <- sample_meta_data[
-      match(samples, sample_meta_data[,1]),
+      sample_meta_data[[filenames]] %in% samples,
     ]
+
+    assays_list <- lapply(assays_list, function(x) {
+      x[,sample_meta_data[[filenames]]]
+    })
+
+    samples <- colnames(assays_list[[1]])
+
   }
+
+  sample_meta_data <- sample_meta_data[
+    match(samples, sample_meta_data[[filenames]]),
+  ]
+
+  rownames(sample_meta_data) <- sample_meta_data[[filenames]]
 
   # generate summarized experiment
 
