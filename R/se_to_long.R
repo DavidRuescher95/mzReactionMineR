@@ -10,6 +10,7 @@
 #' @importFrom SummarizedExperiment rowData SummarizedExperiment
 #' @param object a SummarizedExperiment object
 #' @param assay a character string indicating the assay to be used
+#' @param filename a character string indicating the name of the column in the colData that corresponds to the assay columns. Default is "filename".
 #'
 #' @returns a data.frame in long format
 #' @export

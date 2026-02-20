@@ -14,6 +14,7 @@
 #'     colData(object) that should be used as test variables.
 #' @param padj_method Character. The method used to adjust the p-values.
 #'     Default is "fdr".
+#' @param return_colums Character vector. The columns from rowData(object) that are reported in results. Default is c("id", "rt", "mz").
 #' @return Returns a data.frame that contains the ANOVA table.
 #' @export
 

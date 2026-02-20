@@ -12,7 +12,6 @@
 #' @param filenames character. name of the column in the meta data that
 #'     corresponds to the sample names in the feature table
 #' @param assays character vector. what result type to use. (i.e. "height")
-
 #'
 #' @returns a summarizedExperiment Object
 #' @export
