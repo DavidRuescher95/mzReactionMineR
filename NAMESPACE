@@ -2,6 +2,7 @@
 
 export(QC_plots)
 export(anovaLimma)
+export(blankSubtractionSE)
 export(contrastLimma)
 export(filterSe)
 export(filterSe_ims)
