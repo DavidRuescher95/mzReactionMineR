@@ -16,12 +16,12 @@
 #' @param group_col Character. Either "none" or a columnname in the colData
 #' @param not_in Character. Either "none" or a value in the group_col.
 #'     Specify, if an id should not be present in a group.
-#' @param min_abundance Numeric. Minimum abundance for a feature to be present
-#'     in a sample
-#' @param min_pct Numeric. Minimum percentage of samples a feature must be
-#'     present in. If group_col is specified, the percentage is calculated for
-#'     for each group. If min_n is specified, this is ignored, the larger value
-#'     will be used.
+#' @param min_abundance Numeric \[0,1\]. Minimum value in assay for a feature. Values
+#'     below are treated as absent. Default is 0.
+#' @param min_pct Numeric. Minimum ratio of samples a feature must be
+#'     present in. If group_col is specified, the ratio is calculated for
+#'     for each group. If min_n is specified, the larger value will be used.
+#'     This is applied after filtering for min_abundance.
 #' @param min_n Integer. Minimum number of samples a feature must be
 #'     present in. If group_col is specified, the percentage is calculated for
 #'     for each group. If min_pct is specified, this is ignored, the larger value

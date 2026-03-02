@@ -33,13 +33,13 @@ that corresponds to the assay columns}
 \item{not_in}{Character. Either "none" or a value in the group_col.
 Specify, if an id should not be present in a group.}
 
-\item{min_abundance}{Numeric. Minimum abundance for a feature to be present
-in a sample}
+\item{min_abundance}{Numeric [0,1]. Minimum value in assay for a feature. Values
+below are treated as absent. Default is 0.}
 
-\item{min_pct}{Numeric. Minimum percentage of samples a feature must be
-present in. If group_col is specified, the percentage is calculated for
-for each group. If min_n is specified, this is ignored, the larger value
-will be used.}
+\item{min_pct}{Numeric. Minimum ratio of samples a feature must be
+present in. If group_col is specified, the ratio is calculated for
+for each group. If min_n is specified, the larger value will be used.
+This is applied after filtering for min_abundance.}
 
 \item{min_n}{Integer. Minimum number of samples a feature must be
 present in. If group_col is specified, the percentage is calculated for

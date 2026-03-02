@@ -3,7 +3,7 @@
 #' A wrapper function to calculate all pairwise modifeid cosine scores based on
 #'     the Spectra package.
 #'
-#'@importFrom Spectra join_gnps precursorMz peaksData acquisitionNum
+#'@importFrom Spectra precursorMz peaksData acquisitionNum
 #'@importFrom MsCoreUtils gnps join_gnps
 #'
 #' @param sps Spectra object. Must contain multiple MS/MS spectra
@@ -13,7 +13,6 @@
 #' @returns An upper triangular matrix of modified cosine scores
 #' @export
 #'
-#' @examples
 modified_cosine <- function(sps, tolerance = 0, ppm = 10) {
   # generate empty matrix
   modified_cosine <- matrix(
