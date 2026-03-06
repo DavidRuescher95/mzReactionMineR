@@ -15,6 +15,7 @@ filterSe(
   min_n = 1L,
   mz_range = c(0, Inf),
   rt_range = c(0, Inf),
+  specific_mz = "none",
   id_col = "id",
   rt_col = "rt",
   mz_col = "mz"
@@ -49,6 +50,9 @@ will be used.}
 \item{mz_range}{Numeric. A vector of length 2. The range of kept m/z values.}
 
 \item{rt_range}{Numeric. A vector of length 2. The range of kept rt values.}
+
+\item{specific_mz}{Numeric vector or "none". remove rows that do not have a
+specific m/z value. This is applied after filtering for min_abundance.}
 
 \item{id_col}{Character. The respective column name in the rowData.}
 

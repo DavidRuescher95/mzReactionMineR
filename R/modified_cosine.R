@@ -1,6 +1,6 @@
 #' modified cosine.
 #'
-#' A wrapper function to calculate all pairwise modifeid cosine scores based on
+#' A wrapper function to calculate all pairwise modified cosine scores based on
 #'     the Spectra package.
 #'
 #'@importFrom Spectra precursorMz peaksData acquisitionNum

@@ -28,6 +28,8 @@
 #'     will be used.
 #' @param mz_range Numeric. A vector of length 2. The range of kept m/z values.
 #' @param rt_range Numeric. A vector of length 2. The range of kept rt values.
+#' @param specific_mz Numeric vector or "none". remove rows that do not have a
+#'     specific m/z value. This is applied after filtering for min_abundance.
 #' @param id_col Character. The respective column name in the rowData.
 #' @param rt_col Character. The respective column name in the rowData.
 #' @param mz_col Character. The respective column name in the rowData.
@@ -45,6 +47,7 @@ filterSe <- function(
   min_n = 1L,
   mz_range = c(0,Inf),
   rt_range = c(0,Inf),
+  specific_mz = "none",
   id_col = "id",
   rt_col = "rt",
   mz_col = "mz"
