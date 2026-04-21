@@ -98,7 +98,7 @@ normalizeIS <- function(
   new_object <- divide_by_feature(
     object = object,
     assay = assay,
-    vector = 1/correction_factor,
+    vector = correction_factor,
     new_assay_name = new_assay_name
     )
 
