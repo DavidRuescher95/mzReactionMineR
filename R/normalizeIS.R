@@ -8,7 +8,7 @@
 #'
 #'  Normalization is defined as:
 #'
-#'    \deqn{\hat{Y_ij} = Y_ij\frac{S_j}{\overline{S}}}
+#'    \deqn{\hat{Y_ij} = Y_ij\frac{\overline{S}{S_j}}}
 #'
 #'  Where \eqn{\hat{Y_ij}} is the normalized value of peak i in sample j,
 #'  \eqn{Y_ij} is the original value  of peak i in sample j, \eqn{S_j} is the
