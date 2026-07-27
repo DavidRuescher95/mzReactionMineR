@@ -4,8 +4,7 @@
 #' It is a simplified implementation of mzMine's Join Aligner algorithm.
 #' mzmine.github.io/mzmine_documentation/module_docs/align_join_aligner/join_aligner.html
 #'
-#' @importFrom dplyr %>% select mutate bind_rows sym row_number if_else filter
-#'     ungroup group_by arrange mutate_if
+#' @importFrom dplyr %>% select mutate bind_rows sym row_number if_else filter ungroup group_by arrange mutate_if
 #' @importFrom rlang :=
 #' @param input A named list of data frames, each containing peak information with columns for id, rt, and mz.
 #' @param mz_tolerance Numeric of length 2,

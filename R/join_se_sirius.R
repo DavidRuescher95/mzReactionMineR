@@ -6,6 +6,8 @@
 #' @importFrom SummarizedExperiment rowData SummarizedExperiment
 #' @importFrom dplyr left_join
 #' @importFrom utils read.delim
+#' @importFrom methods as
+#' @importFrom stats setNames
 #'
 #' @param object a SummarizedExperiment object
 #' @param path_to_sirius path to the SIRIUS output file that should be joined
@@ -23,23 +25,21 @@ join_se_sirius <- function(
   canopus_structure_summary <- utils::read.delim(
     path_to_sirius
   ) %>%
-    dplyr::rename(
-      id_col = .data$mappingFeatureId
-    ) %>%
     dplyr::mutate(
-      id_col = as.character(.data[[id_col]])
+      mappingFeatureId = as(mappingFeatureId, class(get_rowData(object)[[id_col]]))
     )
   new_rowData <- dplyr::left_join(
     base::as.data.frame(
       SummarizedExperiment::rowData(object)
     ),
-    canopus_structure_summary
+    canopus_structure_summary,
+    by = c(setNames("mappingFeatureId",id_col))
   )
   if(dim(SummarizedExperiment::rowData(object))[1] < dim(new_rowData)[1]){
     print(
       "Duplicate rows in the SIRIUS output file were found. Removing duplicates...",
     )
-    SummarizedExperiment::rowData(object) <- new_rowData[!duplicated(new_rowData$id),]
+    SummarizedExperiment::rowData(object) <- new_rowData[!duplicated(new_rowData[[id_col]]),]
   } else {
     SummarizedExperiment::rowData(object) <- new_rowData
   }

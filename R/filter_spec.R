@@ -2,8 +2,7 @@
 #' A function that filters a spectrum object based on the number of peaks and
 #'     intensity threshold.
 #'
-#' @importFrom Spectra filterIntensity applyProcessing mz intensity filterMzValues
-#'     filterPrecursorPeaks
+#' @importFrom Spectra filterIntensity applyProcessing mz intensity filterMzValues filterPrecursorPeaks
 #' @param sps spectrum object. Input data
 #' @param intensity_threshold numeric. minimum intensity threshold. Defaults to 0
 #'     only meaningful for non-normalized data.

@@ -49,6 +49,9 @@ Must be either "intsnity" or "variance". Default is "area".}
 \item{n_top}{Integer. The number of features to select based on
 filter_type.}
 
+\item{return_removed}{Logical. Whether to return features removed during the clustering process.
+removed features will be added as cluster -1.}
+
 \item{calc_PCA}{Logical. Wether to perform PCA before clustering.
 Default is TRUE.}
 

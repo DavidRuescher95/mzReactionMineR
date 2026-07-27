@@ -5,8 +5,7 @@
 #'
 #' @importFrom SummarizedExperiment rowData assays
 #' @importFrom MatrixGenerics rowVars rowMaxs
-#' @importFrom igraph cluster_louvain membership vertex_attr vertex_attr<- V
-#'        degree delete_vertices subgraph
+#' @importFrom igraph cluster_louvain membership vertex_attr vertex_attr<- V degree delete_vertices subgraph
 #' @importFrom stats prcomp cor
 #' @importFrom dplyr right_join
 #'
@@ -25,6 +24,8 @@
 #'        Must be either "intsnity" or "variance". Default is "area".
 #' @param n_top Integer. The number of features to select based on
 #'        filter_type.
+#' @param return_removed Logical. Whether to return features removed during the clustering process.
+#'        removed features will be added as cluster -1.
 #' @param calc_PCA Logical. Wether to perform PCA before clustering.
 #'        Default is TRUE.
 #' @param min_PC Integer. The minimum number of PCs to retain. Default is 5.

@@ -3,8 +3,7 @@
 #' A function that filters a SummarizedExperiment object based on various
 #'     measures.
 #'
-#' @importFrom dplyr %>% mutate filter group_by summarize ungroup pull sym n
-#'     inner_join
+#' @importFrom dplyr %>% mutate filter group_by summarize ungroup pull sym n inner_join
 #' @importFrom tidyr pivot_longer
 #' @importFrom SummarizedExperiment SummarizedExperiment rowData assays colData
 #' @importFrom tidyselect all_of

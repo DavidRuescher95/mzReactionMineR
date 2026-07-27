@@ -68,10 +68,11 @@ mzmine_to_se <- function(
   # generate list of data matrices
 
   assays_list <- lapply(assays, function(x) {
-    tmp <- features[, grepl(paste0("[.]", x,"$"), names(features))]
-    names(tmp) <- gsub(paste0("[.]",x), "", names(tmp))
-    names(tmp) <- gsub(paste0("datafile[.]"), "", names(tmp))
-    names(tmp) <- make.names(names(tmp))
+    tmp <- features[, grepl("datafile[.]",names(features))] # only datafile columns to avoid issues with other columns that contain the assay name
+    tmp <- features[, grepl(paste0("[.]", x,"$"), names(features))] # only columns with the specified assay name
+    names(tmp) <- gsub(paste0("[.]",x), "", names(tmp)) # remove the assay name from the column names
+    names(tmp) <- gsub(paste0("datafile[.]"), "", names(tmp)) # remove the "datafile." prefix from the column names
+    names(tmp) <- make.names(names(tmp)) # make the column names valid R variable names
     return(as.matrix(tmp))
   })
   names(assays_list) <- assays
